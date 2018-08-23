@@ -11527,8 +11527,8 @@ CREATE TABLE `sysreport` (
   `sql` longtext,
   `groupid` int(3) DEFAULT NULL,
   `userid` int(3) DEFAULT NULL,
-  `createdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `lastupdate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `createdate` timestamp NULL DEFAULT NULL,
+  `lastupdate` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
