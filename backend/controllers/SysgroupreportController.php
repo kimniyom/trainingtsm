@@ -3,8 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\Sysgroupreport;
-use app\models\SysgroupreportSearch;
+use backend\models\Sysgroupreport;
+use backend\models\SysgroupreportSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

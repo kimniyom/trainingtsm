@@ -3,8 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\Sysreport;
-use app\models\SysreportSearch;
+use backend\models\Sysreport;
+use backend\models\SysreportSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -66,7 +66,11 @@ class SysreportController extends Controller
     {
         $model = new Sysreport();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->createdate = date("Y-m-d H:i:s");
+            $model->lastupdate = date("Y-m-d H:i:s");
+            $model->userid = Yii::$app->user->identity->id;
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -86,7 +90,10 @@ class SysreportController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->lastupdate = date("Y-m-d H:i:s");
+            $model->userid = Yii::$app->user->identity->id;
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

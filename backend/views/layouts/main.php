@@ -9,6 +9,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -29,7 +30,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => '{BackEnd}',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -37,14 +38,22 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'หน้าเว็บ', 'url' => Yii::$app->urlManagerFrontend->createUrl(['site/index'])],
         Yii::$app->user->isGuest ?
         ['label' => 'Sign in', 'url' => ['/user/security/login']] :
+        ['label' => 'เมนู', 'items'=>[
+            ['label' => 'กลุ่มรายงาน', 'url' => ['/sysgroupreport/index']],
+            ['label' => 'จัดการรายงาน', 'url' => ['/sysreport/index']],
+            ['label' => 'ผู้ใช้งาน', 'url' => ['/user/security/logout'],'linkOptions' => ['data-method' => 'post']],
+        ]],
+         Yii::$app->user->isGuest ? "" :
         ['label' => 'Account(' . Yii::$app->user->identity->username . ')', 'items'=>[
             ['label' => 'Profile', 'url' => ['/user/settings/profile']],
             ['label' => 'Account', 'url' => ['/user/settings/account']],
             ['label' => 'Logout', 'url' => ['/user/security/logout'],'linkOptions' => ['data-method' => 'post']],
         ]],
-        ['label' => 'Register', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest],
+        Yii::$app->user->isGuest ? "" :
+        ['label' => 'Register', 'url' => ['/user/registration/register']]
     ];
 
     echo Nav::widget([
@@ -58,6 +67,7 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+        
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>

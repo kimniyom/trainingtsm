@@ -2,11 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use backend\models\Sysgroupreport;
+use dektrium\user\models\User;
 /* @var $this yii\web\View */
 /* @var $model app\models\Sysreport */
 
-$this->title = $model->id;
+$this->title = $model->reportname;
 $this->params['breadcrumbs'][] = ['label' => 'Sysreports', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -28,11 +29,24 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            //'id',
             'reportname',
             'sql:ntext',
-            'groupid',
-            'userid',
+            //'groupid',
+            [
+              'label' => 'กลุ่ม',
+                'format' => 'raw',
+                'value' => function($data){
+                    return Sysgroupreport::findOne(['id=:id',':id' => $data['groupid']])['groupname'];
+                }
+            ],
+            [
+              'label' => 'ผู้บันทึก',
+                'format' => 'raw',
+                'value' => function($data){
+                    return User::findOne(['id=:id',':id' => $data['userid']])['username'];
+                }
+            ],
             'createdate',
             'lastupdate',
         ],

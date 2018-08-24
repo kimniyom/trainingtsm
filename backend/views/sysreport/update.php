@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Sysreport */
 
-$this->title = 'Update Sysreport: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Sysreports', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->title = 'Update Sysreport: ' . $model->reportname;
+$this->params['breadcrumbs'][] = ['label' => 'รายงาน', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->reportname, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="sysreport-update">

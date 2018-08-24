@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
@@ -46,12 +46,12 @@ class Sysreport extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'reportname' => 'Reportname',
-            'sql' => 'Sql',
-            'groupid' => 'Groupid',
+            'reportname' => 'ชื่อรายงาน',
+            'sql' => 'คำสั่ง Sql',
+            'groupid' => 'กลุ่มรายงาน',
             'userid' => 'Userid',
-            'createdate' => 'Createdate',
-            'lastupdate' => 'Lastupdate',
+            'createdate' => 'วันที่บันทึก',
+            'lastupdate' => 'แก้ไขล่าสุด',
         ];
     }
 }

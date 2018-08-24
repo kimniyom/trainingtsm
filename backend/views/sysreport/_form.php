@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
+use app\models\Sysgroupreport;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Sysreport */
@@ -14,16 +17,18 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'reportname')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'sql')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'groupid')->textInput() ?>
-
-    <?= $form->field($model, 'userid')->textInput() ?>
-
-    <?= $form->field($model, 'createdate')->textInput() ?>
-
-    <?= $form->field($model, 'lastupdate')->textInput() ?>
-
+    <?php 
+        echo $form->field($model, 'groupid')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(Sysgroupreport::find()->all(),'id','groupname'),
+        //'language' => 'th',
+        'options' => ['placeholder' => 'กลุ่มรายงาน ...'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
+    ?>
+<?= $form->field($model, 'sql')->textarea(['rows' => 10]) ?>
+  
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
