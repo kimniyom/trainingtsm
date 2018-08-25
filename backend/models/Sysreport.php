@@ -31,9 +31,9 @@ class Sysreport extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['groupid','sql','reportname'],'required'],
+            [['groupid','sql','reportname','rowsum'],'required'],
             [['sql'], 'string'],
-            [['groupid', 'userid'], 'integer'],
+            [['groupid', 'userid','rowsum'], 'integer'],
             [['createdate', 'lastupdate'], 'safe'],
             [['reportname'], 'string', 'max' => 255],
         ];
@@ -52,6 +52,7 @@ class Sysreport extends \yii\db\ActiveRecord
             'userid' => 'Userid',
             'createdate' => 'วันที่บันทึก',
             'lastupdate' => 'แก้ไขล่าสุด',
+            'rowsum' => 'ผลรวม',
         ];
     }
 }

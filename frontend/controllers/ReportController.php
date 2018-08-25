@@ -21,9 +21,15 @@ use backend\models\Sysgroupreport;
  */
 class ReportController extends Controller {
 
-    public function actionIndex($reportID) {
+    public function actionIndex($reportID, $year = null) {
+        if (!empty($year)) {
+            $years = $year;
+        } else {
+            $years = date("Y");
+        }
+        $data['year'] = $years;
         $report = Sysreport::findOne(["id=:id", ":id" => $reportID]);
-        $sql = $report['sql'];
+        $sql = str_replace('$budgetyear', $years, $report['sql']);
         $result = Yii::$app->db->createCommand($sql)->QueryOne();
         $Head = array();
         foreach ($result as $key => $value) {
@@ -31,11 +37,13 @@ class ReportController extends Controller {
         }
         $CountColumns = count($Head);
         $str = "";
-        $str .= "<table class='table' id='reports'>";
+        $str .= "<table class='table table-striped table-bordered' id='reports'>";
         $str .= "<thead>";
         $str .= "<tr>";
+        $col = array();
         for ($i = 0; $i <= ($CountColumns - 1); $i++) {
             $str .= "<th>" . $Head[$i] . "</th>";
+            array_push($col, $i);
         }
         $str .= "</tr>";
         $str .= "</thead>";
@@ -44,15 +52,35 @@ class ReportController extends Controller {
         foreach ($resultbody as $rs):
             $str .= "<tr>";
             for ($i = 0; $i <= ($CountColumns - 1); $i++) {
-                $str .= "<td>" . $rs[$Head[$i]] . "</td>";
+                if ($i == 0) {
+                    $str .= "<th style='text-align:left;'>" . $rs[$Head[$i]] . "</th>";
+                } else {
+                    $str .= "<td>" . $rs[$Head[$i]] . "</td>";
+                }
+                $col[$i] = $col[$i] + $rs[$Head[$i]];
             }
+
             $str .= "</tr>";
         endforeach;
         $str .= "</tbody>";
+        if ($report['rowsum'] == "1") {
+            $str .= "<tfoot>";
+            $str .= "<tr>";
+            for ($i = 0; $i <= ($CountColumns - 1); $i++) {
+                if ($i == 0) {
+                    $str .= "<th style='text-align:center;'>รวม</th>";
+                } else {
+                    $str .= "<td>" . $col[$i] . "</td>";
+                }
+            }
+            $str .= "</tr>";
+            $str .= "</tfoot>";
+        }
         $str .= "</table>";
         $data['report'] = $report;
         $data['table'] = $str;
-        return $this->render('index',$data);
+        $data['group'] = Sysgroupreport::findOne(["id=:id",":id" => $report['groupid']]);
+        return $this->render('index', $data);
     }
 
     public function actionTestquery() {
