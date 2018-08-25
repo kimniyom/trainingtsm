@@ -44,7 +44,7 @@ AppAsset::register($this);
         ['label' => 'เมนู', 'items'=>[
             ['label' => 'กลุ่มรายงาน', 'url' => ['/sysgroupreport/index']],
             ['label' => 'จัดการรายงาน', 'url' => ['/sysreport/index']],
-            ['label' => 'ผู้ใช้งาน', 'url' => ['/user/security/logout'],'linkOptions' => ['data-method' => 'post']],
+            ['label' => 'ผู้ใช้งาน', 'url' => ['/user/admin'],'linkOptions' => ['data-method' => 'post']],
         ]],
          Yii::$app->user->isGuest ? "" :
         ['label' => 'Account(' . Yii::$app->user->identity->username . ')', 'items'=>[

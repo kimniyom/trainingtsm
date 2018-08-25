@@ -29,6 +29,7 @@ use backend\models\Sysgroupreport;
     ?>
     <?= $form->field($model, 'sql')->textarea(['rows' => 10]) ?>
     <?= $form->field($model, 'rowsum')->radioList(['0' => 'ไม่แสดง', '1' => 'แสดง']) ?>
+    <?= $form->field($model, 'privilege')->radioList(['0' => 'ทั้งหมด', '1' => 'เฉพาะสมาชิก', '2' => 'เฉพาะเจ้าของงาน']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
